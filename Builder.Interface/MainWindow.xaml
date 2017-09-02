@@ -1,0 +1,41 @@
+﻿<Window x:Class="Builder.Interface.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Builder.Interface"
+        mc:Ignorable="d"
+        Title="Binder by gXY" Height="350" Width="531.496">
+    <Grid Margin="11" Name="GridMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label  Grid.Row="0" Grid.Column="0" Content="Кнопки" Padding="0" Margin="0,0,5,5"/>
+        <Label  Grid.Row="0" Grid.Column="1" Content="Кол-во&#xD;&#xA;строк" Padding="0" Margin="0,0,5,5" />
+        <Label  Grid.Row="0" Grid.Column="2" Content="Ввод &#xD;&#xA;команд" Padding="0" Margin="0,0,5,5"/>
+        <Label  Grid.Row="0" Grid.Column="3" Content="Краткое название" Padding="0" Margin="0,0,0,5"/>
+
+
+        <TextBox Grid.Row="1" Grid.Column="0" x:Name="Controls" HorizontalAlignment="Stretch"  Cursor="" Text="Нет" IsReadOnly="True" Margin="0,0,5,5" />
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="CountCommand1" Margin="0,0,5,5" />
+        <Button  Grid.Row="1" Grid.Column="2" Tag="{x:Reference CountCommand1}" x:Name="NewCommands1" Content="Команды"  Click="creatingNewCommands" Margin="0,0,5,5"/>
+        <TextBox Grid.Row="1" Grid.Column="3" Margin="0,0,0,5" />
+        
+    </Grid>
+</Window>
