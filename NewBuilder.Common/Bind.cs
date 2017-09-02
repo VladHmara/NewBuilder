@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewBuilder.Common
 {
-    class Bind
+    class Bind : Base<Bind>
     {
     }
 }

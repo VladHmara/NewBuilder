@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewBuilder.Common
 {
-    class BindContent : Base
+    class BindContent : Base<BindContent>
     {
     }
 }
