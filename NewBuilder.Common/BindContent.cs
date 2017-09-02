@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NewBuilder.Common
 {
-    public class Class1
+    class BindContent : Base
     {
     }
 }
