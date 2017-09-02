@@ -15,6 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 
+
+
+
 namespace Builder.Interface
 {
     /// <summary>
@@ -25,7 +28,10 @@ namespace Builder.Interface
     public partial class MainWindow : Window
     {
         private List<Key> bufferKeys = new List<Key>();
+        private Hook _hook;
 
+        [DllImport("user32.dll")]
+        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 
         public MainWindow()
         {
@@ -34,6 +40,16 @@ namespace Builder.Interface
             Controls.KeyUp += Controls_KeyUp;
 
             Controls.KeyDown += Controls_KeyDown;
+
+            keybd_event(0x46, 0x45, 0x1, (UIntPtr)0);
+
+            // 0x90 клавиша NumLock
+            _hook = new Hook(0x46); 
+
+            _hook.KeyPressed += new System.Windows.Forms.KeyPressEventHandler(_hook_KeyPressed);
+            _hook.SetHook();
+
+            
 
         }
 
@@ -45,7 +61,7 @@ namespace Builder.Interface
                 Controls.Text = "Нет";
             }
             bufferKeys.Remove(e.Key);
-
+                
         }
 
         private void Controls_KeyDown(object sender, KeyEventArgs e)
@@ -96,10 +112,15 @@ namespace Builder.Interface
 
         private void creatingNewCommands(object sender, RoutedEventArgs e)
         {
-            int count = Int32.Parse(((TextBox)((Button)sender).Tag).Text);
+            int count = Int32.Parse(((System.Windows.Controls.TextBox)((System.Windows.Controls.Button)sender).Tag).Text);
 
             CreatingCommands instance = new CreatingCommands(count);
             instance.Show();
+        }
+
+        void _hook_KeyPressed(object sender, System.Windows.Forms.KeyPressEventArgs e) //Событие нажатия клавиш
+        {
+            DopText.Text = "Hi";
         }
     }
 

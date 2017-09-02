@@ -8,5 +8,8 @@ namespace NewBuilder.Common
 {
     class Bind : Base<Bind>
     {
+
+
+
     }
 }
