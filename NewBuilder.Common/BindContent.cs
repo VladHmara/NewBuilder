@@ -8,5 +8,9 @@ namespace NewBuilder.Common
 {
     class BindContent : Base<BindContent>
     {
+        string Content { get; set; }
+        int Index { get; }
+        Guid BindId { get; }
+        TimeSpan Delay { get; set; }
     }
 }
