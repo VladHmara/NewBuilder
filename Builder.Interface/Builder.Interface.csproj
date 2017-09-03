@@ -68,6 +68,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BindVM.cs" />
     <Compile Include="Hook.cs" />
     <Compile Include="CreatingCommands.xaml.cs">
       <DependentUpon>CreatingCommands.xaml</DependentUpon>
@@ -103,6 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NewBuilder.Common\NewBuilder.Common.csproj">
+      <Project>{dbd80112-1ab9-4453-81ac-79e952c24495}</Project>
+      <Name>NewBuilder.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

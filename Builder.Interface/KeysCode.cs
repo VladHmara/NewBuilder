@@ -9,7 +9,7 @@ namespace Builder.Interface
 {
     static class KeysCode
     {
-        static Dictionary<String, int> myKey = new Dictionary<String, int>();
+        static Dictionary<string, int> myKey = new Dictionary<string, int>();
         
         private static void MyKeyAdding()
         {

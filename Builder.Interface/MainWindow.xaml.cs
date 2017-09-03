@@ -37,19 +37,19 @@ namespace Builder.Interface
         {
             InitializeComponent();
 
-            Controls.KeyUp += Controls_KeyUp;
+            //Controls.KeyUp += Controls_KeyUp;
 
-            Controls.KeyDown += Controls_KeyDown;
+            //Controls.KeyDown += Controls_KeyDown;
 
-            keybd_event(0x46, 0x45, 0x1, (UIntPtr)0);
+            //keybd_event(0x46, 0x45, 0x1, (UIntPtr)0);
 
-            // 0x90 клавиша NumLock
-            _hook = new Hook(0x46); 
+            //// 0x90 клавиша NumLock
+            //_hook = new Hook(0x46); 
 
-            _hook.KeyPressed += new System.Windows.Forms.KeyPressEventHandler(_hook_KeyPressed);
-            _hook.SetHook();
+            //_hook.KeyPressed += new System.Windows.Forms.KeyPressEventHandler(_hook_KeyPressed);
+            //_hook.SetHook();
 
-            
+            DataContext = new BindVM();
 
         }
 
@@ -58,24 +58,22 @@ namespace Builder.Interface
             if (e.Key.Equals(Key.Back))
             {
                 bufferKeys.Clear();
-                Controls.Text = "Нет";
+                ((TextBox)sender).Text = "Нет";
             }
             bufferKeys.Remove(e.Key);
-                
+
         }
 
         private void Controls_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
 
-            if (Controls.IsKeyboardFocused)
+            if (((TextBox)sender).IsKeyboardFocused)
             {
-               
                 if (bufferKeys.Count > 0)
                 {
                     if (bufferKeys.Last() != e.Key)
                     {
-
                         if (bufferKeys.Last() < Key.A || bufferKeys.Last() > Key.Z)
                         {
                             bufferKeys.Add(e.Key);
@@ -85,34 +83,30 @@ namespace Builder.Interface
                             bufferKeys.Remove(bufferKeys.Last());
                             bufferKeys.Add(e.Key);
                         }
-
                     }
                 }
                 else
                 {
-                        bufferKeys.Add(e.Key);
+                    bufferKeys.Add(e.Key);
                 }
-                
-
             }
 
-            Controls.Text = String.Empty;
+             ((TextBox)sender).Text = String.Empty;
 
             foreach (var item in bufferKeys)
             {
                 if (bufferKeys.IndexOf(item) != bufferKeys.Count - 1)
-                    Controls.Text += item + " + ";
+                    ((TextBox)sender).Text += item + " + ";
 
                 else
-                    Controls.Text += item;
-
+                    ((TextBox)sender).Text += item;
             }
 
         }
 
         private void creatingNewCommands(object sender, RoutedEventArgs e)
         {
-            int count = Int32.Parse(((System.Windows.Controls.TextBox)((System.Windows.Controls.Button)sender).Tag).Text);
+            int count = Int32.Parse(((TextBox)((Button)sender).Tag).Text);
 
             CreatingCommands instance = new CreatingCommands(count);
             instance.Show();
@@ -120,9 +114,8 @@ namespace Builder.Interface
 
         void _hook_KeyPressed(object sender, System.Windows.Forms.KeyPressEventArgs e) //Событие нажатия клавиш
         {
-            DopText.Text = "Hi";
+            //DopText.Text = "Hi";
         }
     }
-
 }
 
