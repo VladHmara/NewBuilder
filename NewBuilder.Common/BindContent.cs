@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewBuilder.Common
 {
+    [Serializable]
     class BindContent : Base<BindContent>
     {
         string Content { get; set; }

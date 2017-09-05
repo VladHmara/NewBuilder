@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="CreatingCommands" Width="300" Name="Title1" >
     <Grid Name="Grid1"  Width="Auto">
-        
+       
     </Grid>
 </Window>

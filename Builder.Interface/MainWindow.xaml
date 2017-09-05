@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Builder.Interface"
         mc:Ignorable="d"
-        Title="Binder by gXY" Height="350" Width="531.496">
+        Title="Binder by gXY" Height="380" Width="531.496">
     <Grid Margin="11" Name="GridMain">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -35,17 +36,21 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBox Grid.Column="0" KeyDown="Controls_KeyDown" KeyUp="Controls_KeyUp" HorizontalAlignment="Stretch"  Cursor="" Text="Нет" IsReadOnly="True" Margin="0,0,5,5" />
-                            <TextBox Grid.Column="1" x:Name="CountCommand" Margin="0,0,5,5" />
+                            <TextBox Grid.Column="1" x:Name="CountCommand" Text="{Binding Path=CountTemp, Mode=TwoWay}" Margin="0,0,5,5" />
                             <Button Grid.Column="2" Content="Команды" Tag="{x:Reference CountCommand}" Click="creatingNewCommands" Margin="0,0,5,5"/>
-                            <TextBox Grid.Column="3" Margin="0,0,0,5" />
+                            <TextBox Grid.Column="3" Text="{Binding Path=NameTemp, Mode=TwoWay}" Margin="0,0,0,5" />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <!--<TextBox Grid.Row="1" Grid.Column="0" x:Name="Controls" HorizontalAlignment="Stretch"  Cursor="" Text="Нет" IsReadOnly="True" Margin="0,0,5,5" />
-        <TextBox Grid.Row="1" Grid.Column="1" x:Name="CountCommand1" Margin="0,0,5,5" />
-        <Button  Grid.Row="1" Grid.Column="2" Tag="{x:Reference CountCommand1}" x:Name="NewCommands1" Content="Команды"  Click="creatingNewCommands" Margin="0,0,5,5"/>
-        <TextBox x:Name="DopText" Grid.Row="1" Grid.Column="3" Margin="0,0,0,5" />-->
+        <Grid Grid.Row="2" Grid.ColumnSpan="4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Применить" Click="btnApply_Click" Margin="5,5,5,0"/>
+            <Button Grid.Column="1" Content=" Сохранить" Click="btnSave_Click" Margin="5,5,5,0"/>
+        </Grid>
     </Grid>
 </Window>

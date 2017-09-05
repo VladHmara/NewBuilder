@@ -9,12 +9,17 @@ namespace Builder.Interface
 {
     public class BindVM
     {
-        public List<Bind> Items { get; set; }
+        public List<BindModel> Items { get; set; }
         public BindVM()
         {
-            Items = new List<Bind>();
-            for (int i = 0; i < 10; i++)
-                Items.Add(new Bind());
+            Items = new List<BindModel>();
+            foreach (Bind b in Bind.Items)
+                Items.Add(new BindModel(b));
+        }
+        public void SaveChange()
+        {
+            foreach (BindModel bm in Items)
+                bm.SaveChange();
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
+using NewBuilder.Common;
 
 
 
@@ -48,9 +49,12 @@ namespace Builder.Interface
 
             //_hook.KeyPressed += new System.Windows.Forms.KeyPressEventHandler(_hook_KeyPressed);
             //_hook.SetHook();
+            Bind.Load();
+            if (Bind.Items.Count == 0)
+                for (int i = 0; i < 10; i++)
+                    new Bind() { Name = "name", Count = 4 };
 
             DataContext = new BindVM();
-
         }
 
         private void Controls_KeyUp(object sender, KeyEventArgs e)
@@ -115,6 +119,16 @@ namespace Builder.Interface
         void _hook_KeyPressed(object sender, System.Windows.Forms.KeyPressEventArgs e) //Событие нажатия клавиш
         {
             //DopText.Text = "Hi";
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            Bind.Save();
+        }
+
+        private void btnApply_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as BindVM).SaveChange();
         }
     }
 }

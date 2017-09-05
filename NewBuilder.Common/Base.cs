@@ -18,11 +18,11 @@ namespace NewBuilder.Common
         public Base()
         {
             Id = Guid.NewGuid();
-            Items.Add((T)this);
+            _items.Add((T)this);
         }
         static public T GetObjectById(Guid id)
         {
-            foreach (T t in Items)
+            foreach (T t in _items)
                 if (t.Id.Equals(id))
                     return t;
             return null;
@@ -32,7 +32,7 @@ namespace NewBuilder.Common
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream fs = new FileStream(typeof(T).Name + ".dat", FileMode.Create))
             {
-                formatter.Serialize(fs, Items);
+                formatter.Serialize(fs, _items);
             }
         }
         static public void Load()
