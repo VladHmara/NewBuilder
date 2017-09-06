@@ -42,13 +42,13 @@ namespace Builder.Interface
 
             //Controls.KeyDown += Controls_KeyDown;
 
-            //keybd_event(0x46, 0x45, 0x1, (UIntPtr)0);
+            keybd_event(0x46, 0x45, 0x1, (UIntPtr)0);
 
             //// 0x90 клавиша NumLock
-            //_hook = new Hook(0x46); 
+            _hook = new Hook(0x46);
 
-            //_hook.KeyPressed += new System.Windows.Forms.KeyPressEventHandler(_hook_KeyPressed);
-            //_hook.SetHook();
+            _hook.KeyPressed += new System.Windows.Forms.KeyPressEventHandler(_hook_KeyPressed);
+            _hook.SetHook();
             Bind.Load();
             if (Bind.Items.Count == 0)
                 for (int i = 0; i < 10; i++)
@@ -119,6 +119,8 @@ namespace Builder.Interface
         void _hook_KeyPressed(object sender, System.Windows.Forms.KeyPressEventArgs e) //Событие нажатия клавиш
         {
             //DopText.Text = "Hi";
+            System.Windows.Forms.SendKeys.Send("{A}");
+
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
