@@ -4,12 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-
-namespace Builder.Interface
+namespace NewBuilder.Common
 {
-
     public class Hook : IDisposable
     {
         #region Declare WinAPI functions
@@ -23,29 +20,31 @@ namespace Builder.Interface
         [DllImport("user32.dll")]
         private static extern bool UnhookWindowsHookEx(IntPtr hInstance);
         #endregion
-        #region Constants
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WH_KEYDOWN = 0x104;
-        #endregion
 
-        // код клавиши на которую ставим хук
-        private int _key;
-        public event KeyPressEventHandler KeyPressed;
+        #region Constants
+        const int WM_KEYBOARD_LL = 13;
+        const int WM_KEYDOWN = 0x100;
+        const int WM_KEYUP = 0x101;
+        const int WM_SYSKEYDOWN = 0x104;
+        const int WM_SYSKEYUP = 0x105;
+        #endregion
 
         private delegate IntPtr KeyboardHookProc(int code, IntPtr wParam, IntPtr lParam);
         private KeyboardHookProc _proc;
         private IntPtr _hHook = IntPtr.Zero;
 
-        public Hook(int keyCode)
+        private Bind _bind;
+
+        public Hook()
         {
-            _key = keyCode;
             _proc = HookProc;
+            SetHook();
         }
 
         public void SetHook()
         {
             var hInstance = LoadLibrary("User32");
-            _hHook = SetWindowsHookEx(WH_KEYBOARD_LL, _proc, hInstance, 0);
+            _hHook = SetWindowsHookEx(WM_KEYBOARD_LL, _proc, hInstance, 0);
         }
 
         public void Dispose()
@@ -60,19 +59,15 @@ namespace Builder.Interface
 
         private IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam)
         {
-            if ((code >= 0 && wParam == (IntPtr)WH_KEYDOWN) && Marshal.ReadInt32(lParam) == _key)
+            if (code >= 0 && wParam == (IntPtr)WM_KEYDOWN && Marshal.ReadInt32(lParam) == 0x57)
             {
-
                 // бросаем событие
-                if (KeyPressed != null)
-                {
-                    KeyPressed(this, new KeyPressEventArgs(Convert.ToChar(code)));
-                }
+                //MessageBox.Show(wParam.ToString() + " " + Marshal.ReadInt32(lParam).ToString(), "Title");
+                //Bind.Method();
             }
 
             // пробрасываем хук дальше
             return CallNextHookEx(_hHook, code, (int)wParam, lParam);
         }
     }
-
 }

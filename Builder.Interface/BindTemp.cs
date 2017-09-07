@@ -7,25 +7,26 @@ using NewBuilder.Common;
 
 namespace Builder.Interface
 {
-    public class BindModel
+    public class BindTemp
     {
         public Bind myBind { get; set; }
+        private string KeysTemp { get; set; }
         public string NameTemp { get; set; }
         public int CountTemp { get; set; }
-        public int ModKeyTemp { get; set; }
-        public int KeyTemp { get; set; }
-
-        public BindModel(Bind bind)
+        
+        public BindTemp(Bind bind)
         {
             myBind = bind;
             NameTemp = myBind.Name;
             CountTemp = myBind.Count;
+            KeysTemp = KeysCode.ListToString(myBind.Keys);
         }
 
         public void SaveChange()
         {
             myBind.Name = NameTemp;
             myBind.Count = CountTemp;
+            //дописать 
         }
     }
 }

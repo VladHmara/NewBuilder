@@ -29,10 +29,6 @@ namespace Builder.Interface
     public partial class MainWindow : Window
     {
         private List<Key> bufferKeys = new List<Key>();
-        private Hook _hook;
-
-        [DllImport("user32.dll")]
-        static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 
         public MainWindow()
         {
@@ -41,14 +37,7 @@ namespace Builder.Interface
             //Controls.KeyUp += Controls_KeyUp;
 
             //Controls.KeyDown += Controls_KeyDown;
-
-            //keybd_event(0x46, 0x45, 0x1, (UIntPtr)0);
-
-            //// 0x90 клавиша NumLock
-            //_hook = new Hook(0x46); 
-
-            //_hook.KeyPressed += new System.Windows.Forms.KeyPressEventHandler(_hook_KeyPressed);
-            //_hook.SetHook();
+            
             Bind.Load();
             if (Bind.Items.Count == 0)
                 for (int i = 0; i < 10; i++)
@@ -114,11 +103,6 @@ namespace Builder.Interface
 
             CreatingCommands instance = new CreatingCommands(count);
             instance.Show();
-        }
-
-        void _hook_KeyPressed(object sender, System.Windows.Forms.KeyPressEventArgs e) //Событие нажатия клавиш
-        {
-            //DopText.Text = "Hi";
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

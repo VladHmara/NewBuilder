@@ -9,16 +9,16 @@ namespace Builder.Interface
 {
     public class BindVM
     {
-        public List<BindModel> Items { get; set; }
+        public List<BindTemp> Items { get; set; }
         public BindVM()
         {
-            Items = new List<BindModel>();
+            Items = new List<BindTemp>();
             foreach (Bind b in Bind.Items)
-                Items.Add(new BindModel(b));
+                Items.Add(new BindTemp(b));
         }
         public void SaveChange()
         {
-            foreach (BindModel bm in Items)
+            foreach (BindTemp bm in Items)
                 bm.SaveChange();
         }
     }

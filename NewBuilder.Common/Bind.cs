@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,7 +13,16 @@ namespace NewBuilder.Common
     {
         public string Name { get; set; }
         public int Count { get; set; }
-        public int ModKey { get; set; }
-        public int Key { get; set; }
+        public List<int> Keys { get; set; }
+
+        public Bind()
+        {
+            Name = "";
+            Count = 0;
+            Keys = new List<int>();
+        }
+
+        //Дописать чтобы при дисериализации дописывало Hook
+        //Дописать метод имитации клавиш
     }
 }

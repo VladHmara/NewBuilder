@@ -10,7 +10,7 @@ namespace NewBuilder.Common
 {
     [Serializable]
     abstract public class Base<T>
-           where T : Base<T>
+          where T : Base<T>
     {
         static List<T> _items = new List<T>();
         static public List<T> Items { get => _items; }

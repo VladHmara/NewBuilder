@@ -68,13 +68,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BindModel.cs" />
+    <Compile Include="BindTemp.cs" />
     <Compile Include="BindVM.cs" />
-    <Compile Include="Hook.cs" />
     <Compile Include="CreatingCommands.xaml.cs">
       <DependentUpon>CreatingCommands.xaml</DependentUpon>
     </Compile>
-    <Compile Include="KeysCode.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
