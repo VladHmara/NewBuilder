@@ -5,12 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Builder.Interface"
         mc:Ignorable="d"
-        Title="CreatingCommands" Width="531.496" Name="Title1" Height="217" >
+        Title="CreatingCommands" Width="531.496" Name="Title1" Height="437" >
     <Grid Margin="11" Name="GridMain">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -21,19 +20,36 @@
         <Label  Grid.Row="0" Grid.Column="0" Content="Ваша команда" Padding="0" Margin="5"/>
         <Label  Grid.Row="0" Grid.Column="1" Content="Enter" Padding="0" Margin="5"/>
 
-        <TextBox  Grid.Row="1" Grid.Column="0" Padding="0" Margin="5" Height="20"/>
-        <CheckBox  Grid.Row="1" Grid.Column="1" Padding="0" Margin="5" Width="20" Height="20"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" Padding="0,0,5,0">
+            <ItemsControl ItemsSource="{Binding Items}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.9*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding ContentTemp,  Mode=TwoWay}"  Grid.Row="0" Grid.Column="0" Padding="0" Margin="5" Height="20"/>
+                            <CheckBox Content="{Binding IsSendTemp, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Padding="0" Margin="5" Width="20" Height="20"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                            <StackPanel Grid.Row="1"  Grid.Column="0"  Orientation="Horizontal" >
+                                <Label   Content="Задержка:" Padding="0" Height="20" Margin="5"/>
+                                <TextBox Text="{Binding DelayTemp, Mode=TwoWay}"  Padding="0"  Height="20" Width="100"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
         
-        <StackPanel Grid.Row="2"  Grid.Column="0"  Orientation="Horizontal" >
-            <Label   Content="Задержка:" Padding="0" Height="20" Margin="5"/>
-            <TextBox   Padding="0"  Height="20" Width="100"/>
-        </StackPanel>
-
         <Grid Grid.Row="3" Grid.ColumnSpan="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Width="200" Content="Применить"  Margin="5" HorizontalContentAlignment="Center" HorizontalAlignment="Right"/>
+            <Button Grid.Column="1" Width="200" Content="Применить"  Margin="5" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Click="btnSaveClick"/>
         </Grid>
     </Grid>
 </Window>

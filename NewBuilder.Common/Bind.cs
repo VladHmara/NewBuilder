@@ -22,7 +22,19 @@ namespace NewBuilder.Common
             Keys = new List<int>();
         }
 
-        //Дописать чтобы при дисериализации дописывало Hook
+        public List<BindContent> GetBindContents()
+        {
+            List<BindContent> lbc = new List<BindContent>();
+            foreach(BindContent bc in BindContent.Items)
+                if (bc.BindId.Equals(Id))
+                    lbc.Add(bc);
+            return lbc;
+        }
+        
+        public void SendMessage()
+        {
+
+        }
         //Дописать метод имитации клавиш
     }
 }

@@ -9,24 +9,24 @@ namespace Builder.Interface
 {
     public class BindTemp
     {
-        public Bind myBind { get; set; }
-        private string KeysTemp { get; set; }
+        public Bind MyBind { get; set; }
+        public string KeysTemp { get; set; }
         public string NameTemp { get; set; }
         public int CountTemp { get; set; }
         
         public BindTemp(Bind bind)
         {
-            myBind = bind;
-            NameTemp = myBind.Name;
-            CountTemp = myBind.Count;
-            KeysTemp = KeysCode.ListToString(myBind.Keys);
+            MyBind = bind;
+            NameTemp = MyBind.Name;
+            CountTemp = MyBind.Count;
+            KeysTemp = KeysCode.ListToString(MyBind.Keys);
         }
 
         public void SaveChange()
         {
-            myBind.Name = NameTemp;
-            myBind.Count = CountTemp;
-            //дописать 
+            MyBind.Name = NameTemp;
+            MyBind.Count = CountTemp;
+            MyBind.Keys = KeysCode.StringToList(KeysTemp);
         }
     }
 }

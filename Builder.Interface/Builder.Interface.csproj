@@ -68,6 +68,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BindContentTemp.cs" />
+    <Compile Include="BindContentVM.cs" />
     <Compile Include="BindTemp.cs" />
     <Compile Include="BindVM.cs" />
     <Compile Include="CreatingCommands.xaml.cs">

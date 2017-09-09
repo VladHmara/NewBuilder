@@ -100,8 +100,8 @@ namespace Builder.Interface
         private void creatingNewCommands(object sender, RoutedEventArgs e)
         {
             int count = Int32.Parse(((TextBox)((Button)sender).Tag).Text);
-
-            CreatingCommands instance = new CreatingCommands(count);
+            Bind bind =(Bind)((Grid)((Button)sender).Parent).Tag;
+            CreatingCommands instance = new CreatingCommands(bind,count);
             instance.Show();
         }
 
@@ -112,7 +112,7 @@ namespace Builder.Interface
 
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as BindVM).SaveChange();
+            ((BindVM)DataContext).SaveChange();
         }
     }
 }

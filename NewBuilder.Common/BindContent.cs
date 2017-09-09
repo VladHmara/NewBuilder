@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 namespace NewBuilder.Common
 {
     [Serializable]
-    class BindContent : Base<BindContent>
+    public class BindContent : Base<BindContent>
     {
-        string Content { get; set; }
-        Guid BindId { get; }
-        TimeSpan Delay { get; set; }
-        bool IsSend { get; set; }
+        public Guid BindId { get; }
+        public string Content { get; set; }
+        public TimeSpan Delay { get; set; }
+        public bool IsSend { get; set; }
+
+        public BindContent(Guid bindId)
+        {
+            BindId = bindId;
+            Content = "";
+            Delay = TimeSpan.Zero;
+            IsSend = false;
+        }
     }
 }
