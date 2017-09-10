@@ -34,7 +34,7 @@
                                 <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
                             <TextBox Text="{Binding ContentTemp,  Mode=TwoWay}"  Grid.Row="0" Grid.Column="0" Padding="0" Margin="5" Height="20"/>
-                            <CheckBox Content="{Binding IsSendTemp, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Padding="0" Margin="5" Width="20" Height="20"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                            <CheckBox  IsChecked="{Binding IsSendTemp, Mode=TwoWay}"  Grid.Row="0" Grid.Column="1" Padding="0" Margin="5" Width="20" Height="20"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
                             <StackPanel Grid.Row="1"  Grid.Column="0"  Orientation="Horizontal" >
                                 <Label   Content="Задержка:" Padding="0" Height="20" Margin="5"/>
                                 <TextBox Text="{Binding DelayTemp, Mode=TwoWay}"  Padding="0"  Height="20" Width="100"/>

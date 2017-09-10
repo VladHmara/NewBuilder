@@ -13,20 +13,20 @@ namespace Builder.Interface
         public BindContentVM(Bind bind, int count)
         {
             Items = new List<BindContentTemp>();
-            foreach (BindContent bc in BindContent.Items)
+
+            if (count > 0)
             {
-                if (count <= 0)
-                    break;
-                if (bc.BindId.Equals(bind.Id))
+                foreach (BindContent bc in BindContent.Items)
+                    if (bc.BindId.Equals(bind.Id))
+                    {
+                        if (count-- <= 0)
+                            break;
+                        Items.Add(new BindContentTemp(bc));
+                    }
+                while (count-- > 0)
                 {
-                    if (count-- <= 0)
-                        break;
-                    Items.Add(new BindContentTemp(bc));
+                    Items.Add(new BindContentTemp(new BindContent(bind.Id)));
                 }
-            }
-            while(count-- > 0)
-            {
-                Items.Add(new BindContentTemp(new BindContent(bind.Id)));
             }
         }
         public void SaveChange()
