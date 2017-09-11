@@ -35,7 +35,7 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" KeyDown="Controls_KeyDown" KeyUp="Controls_KeyUp" HorizontalAlignment="Stretch"  Cursor="" Text="Нет" IsReadOnly="True" Margin="0,0,5,5" />
+                            <TextBox Grid.Column="0" Text="{Binding Path=KeysTemp, Mode=TwoWay}" KeyDown="Controls_KeyDown" KeyUp="Controls_KeyUp" HorizontalAlignment="Stretch"  Cursor="" IsReadOnly="True" Margin="0,0,5,5" />
                             <TextBox Grid.Column="1" x:Name="CountCommand" Text="{Binding Path=CountTemp, Mode=TwoWay}" Margin="0,0,5,5" />
                             <Button Grid.Column="2" Content="Команды" Tag="{x:Reference CountCommand}" Click="creatingNewCommands" Margin="0,0,5,5"/>
                             <TextBox Grid.Column="3" Text="{Binding Path=NameTemp, Mode=TwoWay}" Margin="0,0,0,5" />

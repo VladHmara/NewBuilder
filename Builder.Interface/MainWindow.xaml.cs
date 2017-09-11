@@ -30,6 +30,8 @@ namespace Builder.Interface
     {
         private List<Key> bufferKeys = new List<Key>();
 
+        Hook myHook = new Hook();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,8 +39,10 @@ namespace Builder.Interface
             //Controls.KeyUp += Controls_KeyUp;
 
             //Controls.KeyDown += Controls_KeyDown;
-            
+            //Hook myHook = new Hook();
+
             Bind.Load();
+            BindContent.Load();
             if (Bind.Items.Count == 0)
                 for (int i = 0; i < 10; i++)
                     new Bind() { Name = "name", Count = 4 };
@@ -108,6 +112,7 @@ namespace Builder.Interface
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             Bind.Save();
+            BindContent.Save();
         }
 
         private void btnApply_Click(object sender, RoutedEventArgs e)

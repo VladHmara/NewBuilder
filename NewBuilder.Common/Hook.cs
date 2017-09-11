@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NewBuilder.Common
@@ -33,7 +34,7 @@ namespace NewBuilder.Common
         private KeyboardHookProc _proc;
         private IntPtr _hHook = IntPtr.Zero;
 
-        private Bind _bind;
+        private List<int> BufferKeyList = new List<int>();
 
         public Hook()
         {
@@ -59,12 +60,43 @@ namespace NewBuilder.Common
 
         private IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam)
         {
-            if (code >= 0 && wParam == (IntPtr)WM_KEYDOWN && Marshal.ReadInt32(lParam) == 0x57)
-            {
-                // бросаем событие
-                //MessageBox.Show(wParam.ToString() + " " + Marshal.ReadInt32(lParam).ToString(), "Title");
-                //Bind.Method();
-            }
+                //if (code >= 0 && wParam == (IntPtr)WM_KEYDOWN && Marshal.ReadInt32(lParam) == 0x57)
+                //{
+
+                //Thread t = new Thread(new ThreadStart(() =>
+                //{
+                //    lock (BufferKeyList)
+                //    {
+                //при проверки достаем весь список биндов и проверяем совпадение
+                // да - вызываем сендМесседж у бинда
+                
+                if (wParam == (IntPtr)0x100 || wParam == (IntPtr)0x104)
+                {
+                if(!BufferKeyList.Contains(Marshal.ReadInt32(lParam)))
+                    BufferKeyList.Add(Marshal.ReadInt32(lParam));
+                }
+
+                if (wParam == (IntPtr)0x101 || wParam == (IntPtr)0x105)
+                {
+                    BufferKeyList.Remove(Marshal.ReadInt32(lParam));
+                }
+
+                if (BufferKeyList.Count != 0)
+                    foreach (var item in Bind.Items)
+                    {
+                        if (item.Keys.SequenceEqual<int>(BufferKeyList))
+                        {
+                            item.SendMessage();
+                        }
+                    }
+                //    }
+
+            //}));
+            //t.Start();
+            // бросаем событие
+            //MessageBox.Show(wParam.ToString() + " " + Marshal.ReadInt32(lParam).ToString(), "Title");
+            //Bind.Method();
+            //}
 
             // пробрасываем хук дальше
             return CallNextHookEx(_hHook, code, (int)wParam, lParam);

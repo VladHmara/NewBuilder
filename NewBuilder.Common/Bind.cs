@@ -35,32 +35,33 @@ namespace NewBuilder.Common
 
         public void SendMessage()
         {
-            Thread t = new Thread(new ThreadStart(() =>
-           {
-               Keyboard kb = new Keyboard();
-               int count = Count;
+            //    Thread t = new Thread(new ThreadStart(() =>
+            //   {
 
-               lock (BindContent.Items)
-                   if (count > 0)
-                       foreach (BindContent bc in BindContent.Items)
-                           if (bc.BindId.Equals(Id))
-                           {
-                               if (count-- <= 0)
-                                   break;
-                               if (bc.IsSend)
-                               {
-                                   kb.SendKeys("{F6}" + bc.Content + "{Enter}", true);
-                                   Thread.Sleep(bc.Delay);
-                               }
-                               else
-                               {
-                                   kb.SendKeys("{F6}" + bc.Content, true);
-                                   Thread.Sleep(bc.Delay);
-                               }
-                           }
+            Keyboard kb = new Keyboard();
+            int count = Count;
 
-           }));
-            t.Start();
+            //lock (BindContent.Items)
+            if (count > 0)
+                foreach (BindContent bc in BindContent.Items)
+                    if (bc.BindId.Equals(Id))
+                    {
+                        if (count-- <= 0)
+                            break;
+                        if (bc.IsSend)
+                        {
+                            kb.SendKeys(bc.Content + "{Enter}", true);
+                            Thread.Sleep(bc.Delay);
+                        }
+                        else
+                        {
+                            kb.SendKeys(bc.Content, true);                   // дописать {F6}
+                            // Thread.Sleep(bc.Delay);
+                        }
+                    }
+
+            //}));
+            // t.Start();
         }
     }
 }

@@ -101,8 +101,9 @@ namespace NewBuilder.Common
         public static List<int> StringToList(string keys)
         {
             List<int> li = new List<int>();
-            foreach (string key in keys.Trim(' ').Split('+'))
-                li.Add(myKey1[key]);
+            if (!keys.Equals(string.Empty))
+                foreach (string key in keys.Trim(' ').Split('+'))
+                    li.Add(myKey1[key]);
             return li;
         }
         public static string ListToString(List<int> keys)
