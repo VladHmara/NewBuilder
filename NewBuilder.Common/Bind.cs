@@ -38,7 +38,7 @@ namespace NewBuilder.Common
             //    Thread t = new Thread(new ThreadStart(() =>
             //   {
 
-            Keyboard kb = new Keyboard();
+
             int count = Count;
 
             //lock (BindContent.Items)
@@ -50,13 +50,18 @@ namespace NewBuilder.Common
                             break;
                         if (bc.IsSend)
                         {
+                            Keyboard kb = new Keyboard();
                             kb.SendKeys(bc.Content + "{Enter}", true);
                             Thread.Sleep(bc.Delay);
                         }
                         else
                         {
-                            kb.SendKeys(bc.Content, true);                   // дописать {F6}
-                            // Thread.Sleep(bc.Delay);
+                            Keyboard kb = new Keyboard();
+                            if (kb.ShiftKeyDown)
+                                kb.SendKeys("{CapsLock}", true);
+                            kb.SendKeys(bc.Content, true);
+                            // дописать {F6}
+                            Thread.Sleep(bc.Delay);
                         }
                     }
 

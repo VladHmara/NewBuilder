@@ -84,14 +84,15 @@ namespace NewBuilder.Common
             myKey1.Add("F8", 0x77);
             myKey1.Add("F9", 0x78);
             myKey1.Add("F10", 0x79);
-            //myKey1.Add("F11", 0x9);
-            //myKey1.Add("F12", 0x9);
-            //myKey1.Add("LeftShift", 0x10);
-            //myKey1.Add("RightShift", 0x10);
-            //myKey1.Add("LeftCtrl", 0x11);
-            //myKey1.Add("RightCtrl", 0x11);
-            //myKey1.Add("LeftAlt", 0x12);
-            //myKey1.Add("RightAlt", 0x12);
+            myKey1.Add("F11", 0x80);
+            myKey1.Add("F12", 0x81);
+            myKey1.Add("LeftShift", 160);
+            myKey1.Add("LeftCtrl", 162);
+            myKey1.Add("System", 164);
+            myKey1.Add("RightShift", 161);
+            myKey1.Add("RightCtrl", 163);
+
+
 
             foreach (string key in myKey1.Keys)
                 myKey2.Add(myKey1[key], key);
@@ -102,16 +103,28 @@ namespace NewBuilder.Common
         {
             List<int> li = new List<int>();
             if (!keys.Equals(string.Empty))
-                foreach (string key in keys.Trim(' ').Split('+'))
-                    li.Add(myKey1[key]);
+            {
+
+
+                foreach (string key in keys.Split('+'))
+                {
+
+                    li.Add(myKey1[key.Trim()]);
+
+
+                }
+
+            }
+
             return li;
+
         }
         public static string ListToString(List<int> keys)
         {
             StringBuilder sb = new StringBuilder();
             foreach (int key in keys)
                 if (keys.IndexOf(key) != keys.Count - 1)
-                    sb.AppendFormat("{0} +", myKey2[key]);
+                    sb.AppendFormat("{0} + ", myKey2[key]);
                 else
                     sb.Append(myKey2[key]);
             return sb.ToString();
