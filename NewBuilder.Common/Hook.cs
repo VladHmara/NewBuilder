@@ -63,6 +63,16 @@ namespace NewBuilder.Common
 
         private IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam)
         {
+            if (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN)
+            {
+                if (!BufferKeyList.Contains(Marshal.ReadInt32(lParam)))
+                    BufferKeyList.Add(Marshal.ReadInt32(lParam));
+            }
+
+            if (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP)
+            {
+                BufferKeyList.Remove(Marshal.ReadInt32(lParam));
+            }
             if (flagNotRepeat)
             {
                 flagNotRepeat = false;
@@ -76,32 +86,21 @@ namespace NewBuilder.Common
                 //при проверки достаем весь список биндов и проверяем совпадение
                 // да - вызываем сендМесседж у бинда
 
-                if (wParam == (IntPtr)0x100 || wParam == (IntPtr)0x104)
-                {
-                    if (!BufferKeyList.Contains(Marshal.ReadInt32(lParam)))
-                        BufferKeyList.Add(Marshal.ReadInt32(lParam));
-                }
-
-                if (wParam == (IntPtr)0x101 || wParam == (IntPtr)0x105)
-                {
-                    BufferKeyList.Remove(Marshal.ReadInt32(lParam));
-                }
+                
 
                 if (BufferKeyList.Count != 0)
                     foreach (var item in Bind.Items)
-                    {
                         if (item.Keys.SequenceEqual<int>(BufferKeyList))
                         {
                             item.SendMessage();
-
-                           
+                            flagNotRepeat = true;
+                            return (IntPtr)1;
                         }
-                    }
                 //Keyboard temp = new Keyboard();
                 //temp.SendKeys(Marshal.ReadInt32(lParam).ToString(), true);
-                flagNotRepeat = true;
 
-               
+
+                flagNotRepeat = true;
 
                 //    }
 

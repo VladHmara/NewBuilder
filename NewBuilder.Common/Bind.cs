@@ -40,7 +40,6 @@ namespace NewBuilder.Common
 
 
             int count = Count;
-
             //lock (BindContent.Items)
             if (count > 0)
                 foreach (BindContent bc in BindContent.Items)
@@ -58,8 +57,8 @@ namespace NewBuilder.Common
                         {
                             Keyboard kb = new Keyboard();
                             if (kb.ShiftKeyDown)
-                                kb.SendKeys("{CapsLock}", true);
-                            kb.SendKeys(bc.Content, true);
+                                kb.SendKeys("{CAPSLOCK}", true);
+                           kb.SendKeys(bc.Content,true);
                             // дописать {F6}
                             Thread.Sleep(bc.Delay);
                         }
