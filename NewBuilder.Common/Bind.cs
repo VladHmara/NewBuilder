@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace NewBuilder.Common
@@ -37,8 +39,6 @@ namespace NewBuilder.Common
         {
             //    Thread t = new Thread(new ThreadStart(() =>
             //   {
-
-
             int count = Count;
             //lock (BindContent.Items)
             if (count > 0)
@@ -55,10 +55,10 @@ namespace NewBuilder.Common
                         }
                         else
                         {
-                            Keyboard kb = new Keyboard();
-                            if (kb.ShiftKeyDown)
-                                kb.SendKeys("{CAPSLOCK}", true);
-                           kb.SendKeys(bc.Content,true);
+                            object bufer = Clipboard.GetDataObject(); // сохраняем данные из буфера
+                            Clipboard.SetText(bc.Content);
+                            SendKeys.SendWait("^v");
+                            Clipboard.SetDataObject(bufer); // возвращаем первоначальные данные в буфер
                             // дописать {F6}
                             Thread.Sleep(bc.Delay);
                         }

@@ -86,7 +86,7 @@ namespace NewBuilder.Common
                 //при проверки достаем весь список биндов и проверяем совпадение
                 // да - вызываем сендМесседж у бинда
 
-                
+
 
                 if (BufferKeyList.Count != 0)
                     foreach (var item in Bind.Items)
@@ -117,6 +117,6 @@ namespace NewBuilder.Common
 
         }
 
-        
+
     }
 }
