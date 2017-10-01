@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Builder.Interface"
         mc:Ignorable="d"
-        Title="Binder by gXY" Height="380" Width="531.496">
-    <Grid Margin="11" Name="GridMain">
+        Title="Binder by gXY" Height="470" Width="650">
+    <Grid Margin="15" Name="GridMain">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
@@ -18,13 +19,33 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        
+        <!--Меню вверхнее-->
+        <Menu Grid.Row="0" Background="White" Grid.ColumnSpan="4"  Height="20" Margin="-6,5,0,5" Padding="0"  >
+           
+            <MenuItem Header="Профили" >
+                <MenuItem Header="Новый"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Открыть"></MenuItem>
+                <MenuItem Header="Сохранить"></MenuItem>
+                <MenuItem Header="Сохранить как..."></MenuItem>
+                <MenuItem Header="О программе..."></MenuItem>
+                <MenuItem Header="Пожертвование"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Выход"></MenuItem>
+            </MenuItem>
+            
+            <MenuItem Header="Настройка" Click="Settings_Click">
+            </MenuItem>
+            
+        </Menu>
 
-        <Label  Grid.Row="0" Grid.Column="0" Content="Кнопки" Padding="0" Margin="0,0,5,5"/>
-        <Label  Grid.Row="0" Grid.Column="1" Content="Кол-во&#xD;&#xA;строк" Padding="0" Margin="0,0,5,5" />
-        <Label  Grid.Row="0" Grid.Column="2" Content="Ввод &#xD;&#xA;команд" Padding="0" Margin="0,0,5,5"/>
-        <Label  Grid.Row="0" Grid.Column="3" Content="Краткое название" Padding="0" Margin="0,0,0,5"/>
+        <Label  Grid.Row="1" Grid.Column="0" Content="Кнопки" Padding="0" Margin="0,0,5,5"/>
+        <Label  Grid.Row="1" Grid.Column="1" Content="Кол-во&#xD;&#xA;строк" Padding="0" Margin="0,0,5,5" />
+        <Label  Grid.Row="1" Grid.Column="2" Content="Ввод &#xD;&#xA;команд" Padding="0" Margin="0,0,5,5"/>
+        <Label  Grid.Row="1" Grid.Column="3" Content="Краткое название" Padding="0" Margin="0,0,0,5"/>
 
-        <ScrollViewer Grid.Row="1" Grid.ColumnSpan="4" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" Padding="0,0,5,0">
+        <ScrollViewer Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" Padding="0,0,5,0">
             <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -35,22 +56,22 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Text="{Binding Path=KeysTemp, Mode=TwoWay}" KeyDown="Controls_KeyDown" KeyUp="Controls_KeyUp" HorizontalAlignment="Stretch"  Cursor="" IsReadOnly="True" Margin="0,0,5,5" />
-                            <TextBox Grid.Column="1" x:Name="CountCommand" Text="{Binding Path=CountTemp, Mode=TwoWay}" Margin="0,0,5,5" />
-                            <Button Grid.Column="2" Content="Команды" Tag="{x:Reference CountCommand}" Click="creatingNewCommands" Margin="0,0,5,5"/>
-                            <TextBox Grid.Column="3" Text="{Binding Path=NameTemp, Mode=TwoWay}" Margin="0,0,0,5" />
+                            <TextBox Grid.Column="0" Text="{Binding Path=KeysTemp, Mode=TwoWay}" KeyDown="Controls_KeyDown" KeyUp="Controls_KeyUp" HorizontalAlignment="Stretch"  Cursor="" IsReadOnly="True" Margin="0,0,7,10" />
+                            <TextBox Grid.Column="1" x:Name="CountCommand" Text="{Binding Path=CountTemp, Mode=TwoWay}" Margin="0,0,7,10" />
+                            <Button Grid.Column="2" Content="Команды" Tag="{x:Reference CountCommand}" Click="creatingNewCommands" Margin="0,0,7,10"/>
+                            <TextBox Grid.Column="3" Text="{Binding Path=NameTemp, Mode=TwoWay}" Margin="0,0,0,10" Padding="1,0,0,0" />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <Grid Grid.Row="2" Grid.ColumnSpan="4" >
+        <Grid Grid.Row="3" Grid.ColumnSpan="4" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Применить" Click="btnApply_Click" Margin="5,5,5,0"/>
-            <Button Grid.Column="1" Content=" Сохранить" Click="btnSave_Click" Margin="5,5,5,0"/>
+            <Button Grid.Column="0" Content="Применить" Click="btnApply_Click" Margin="0,5,5,0"/>
+            <Button Grid.Column="1" Content=" Сохранить" Click="btnSave_Click" Margin="5,5,0,0"/>
         </Grid>
     </Grid>
 </Window>

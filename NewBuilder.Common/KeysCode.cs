@@ -13,7 +13,7 @@ namespace NewBuilder.Common
 
         static KeysCode()
         {
-            myKey1.Add("Back", 0x8);
+            myKey1.Add("Нет", 0);
             myKey1.Add("Tab", 0x9);
             myKey1.Add("Enter", 0x0D);
             myKey1.Add("CapsLock", 0x14);
@@ -87,10 +87,11 @@ namespace NewBuilder.Common
             myKey1.Add("F11", 0x80);
             myKey1.Add("F12", 0x81);
             myKey1.Add("LeftShift", 160);
-            myKey1.Add("LeftCtrl", 162);
-            myKey1.Add("System", 164);
             myKey1.Add("RightShift", 161);
+            myKey1.Add("LeftCtrl", 162);
             myKey1.Add("RightCtrl", 163);
+            myKey1.Add("System", 164);
+            myKey1.Add("LeftAlt", 165);
 
 
 

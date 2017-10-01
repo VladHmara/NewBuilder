@@ -37,10 +37,14 @@ namespace NewBuilder.Common
 
         public void SendMessage()
         {
+
             //    Thread t = new Thread(new ThreadStart(() =>
             //   {
             int count = Count;
             //lock (BindContent.Items)
+
+            //
+
             if (count > 0)
                 foreach (BindContent bc in BindContent.Items)
                     if (bc.BindId.Equals(Id))
@@ -49,23 +53,26 @@ namespace NewBuilder.Common
                             break;
                         if (bc.IsSend)
                         {
+
+
                             Keyboard kb = new Keyboard();
                             kb.SendKeys(bc.Content + "{Enter}", true);
                             Thread.Sleep(bc.Delay);
                         }
                         else
                         {
-                            object bufer = Clipboard.GetDataObject(); // сохраняем данные из буфера
+                            //object bufer = Clipboard.GetDataObject(); // сохраняем данные из буфера
                             Clipboard.SetText(bc.Content);
                             SendKeys.SendWait("^v");
-                            Clipboard.SetDataObject(bufer); // возвращаем первоначальные данные в буфер
-                            // дописать {F6}
+                            //Clipboard.SetDataObject(bufer); // возвращаем первоначальные данные в буфер
+                            // дописать {F6} + разобраться с сохранением в буфер и записью обратно
                             Thread.Sleep(bc.Delay);
                         }
                     }
-
-            //}));
-            // t.Start();
         }
+
+
+        //}));
+        // t.Start();
     }
 }

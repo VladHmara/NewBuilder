@@ -12,6 +12,9 @@ namespace NewBuilder.Common
 {
     public class Hook : IDisposable
     {
+
+      
+
         #region Declare WinAPI functions
         [DllImport("kernel32.dll")]
         private static extern IntPtr LoadLibrary(string lpFileName);
@@ -63,55 +66,59 @@ namespace NewBuilder.Common
 
         private IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam)
         {
-            if (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN)
-            {
-                if (!BufferKeyList.Contains(Marshal.ReadInt32(lParam)))
-                    BufferKeyList.Add(Marshal.ReadInt32(lParam));
-            }
+            
 
-            if (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP)
-            {
-                BufferKeyList.Remove(Marshal.ReadInt32(lParam));
-            }
-            if (flagNotRepeat)
-            {
-                flagNotRepeat = false;
-                //if (code >= 0 && wParam == (IntPtr)WM_KEYDOWN && Marshal.ReadInt32(lParam) == 0x57)
-                //{
+                if (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN)
+                {
+                    if (!BufferKeyList.Contains(Marshal.ReadInt32(lParam)))
+                        BufferKeyList.Add(Marshal.ReadInt32(lParam));
+                }
 
-                //Thread t = new Thread(new ThreadStart(() =>
-                //{
-                //    lock (BufferKeyList)
-                //    {
-                //при проверки достаем весь список биндов и проверяем совпадение
-                // да - вызываем сендМесседж у бинда
+                if (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP)
+                {
+                    BufferKeyList.Remove(Marshal.ReadInt32(lParam));
+                }
+                //MyWindowIsActive - returning IntPtr active window
+                if (flagNotRepeat)// && ActiveCurrentWindow.MyWindowIsActive() == (IntPtr)0x000202c2)
+                {
+                    flagNotRepeat = false;
+                    //if (code >= 0 && wParam == (IntPtr)WM_KEYDOWN && Marshal.ReadInt32(lParam) == 0x57)
+                    //{
 
-
-
-                if (BufferKeyList.Count != 0)
-                    foreach (var item in Bind.Items)
-                        if (item.Keys.SequenceEqual<int>(BufferKeyList))
-                        {
-                            item.SendMessage();
-                            flagNotRepeat = true;
-                            return (IntPtr)1;
-                        }
-                //Keyboard temp = new Keyboard();
-                //temp.SendKeys(Marshal.ReadInt32(lParam).ToString(), true);
+                    //Thread t = new Thread(new ThreadStart(() =>
+                    //{
+                    //    lock (BufferKeyList)
+                    //    {
+                    //при проверки достаем весь список биндов и проверяем совпадение
+                    // да - вызываем сендМесседж у бинда
 
 
-                flagNotRepeat = true;
 
-                //    }
+                    if (BufferKeyList.Count != 0)
+                        foreach (var item in Bind.Items)
+                            if (item.Keys.SequenceEqual<int>(BufferKeyList))
+                            {
+                                item.SendMessage();
+                                flagNotRepeat = true;
+                                return (IntPtr)1;
+                            }
+                    //Keyboard temp = new Keyboard();
+                    //temp.SendKeys(Marshal.ReadInt32(lParam).ToString(), true);
 
-                //}));
-                //t.Start();
-                // бросаем событие
-                //MessageBox.Show(wParam.ToString() + " " + Marshal.ReadInt32(lParam).ToString(), "Title");
-                //Bind.Method();
-                //}
-            }
 
+                    flagNotRepeat = true;
+
+                    //    }
+
+                    //}));
+                    //t.Start();
+                    // бросаем событие
+                    //MessageBox.Show(wParam.ToString() + " " + Marshal.ReadInt32(lParam).ToString(), "Title");
+                    //Bind.Method();
+                    //}
+                }
+
+        
             // пробрасываем хук дальше
             return CallNextHookEx(_hHook, code, (int)wParam, lParam);
 
