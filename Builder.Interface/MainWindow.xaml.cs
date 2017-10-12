@@ -50,7 +50,7 @@ namespace Builder.Interface
             DataContext = new BindVM();
         }
 
-        // переписать, на то же самое что и в Controls_KeyDown
+        // Думать что написать
         private void Controls_KeyUp(object sender, KeyEventArgs e)
         {
             //if (e.Key.Equals(Key.Back))
@@ -61,7 +61,7 @@ namespace Builder.Interface
             //bufferKeys.Remove(e.Key);
         }
 
-        // Переписать весь метод, используя ModifierKeys
+        // Написать используя... используя... хук, вот.
         private void Controls_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
