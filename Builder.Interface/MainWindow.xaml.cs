@@ -28,7 +28,6 @@ namespace Builder.Interface
     /// 
     public partial class MainWindow : Window
     {
-        private List<Key> bufferKeys = new List<Key>(); // буфер не нужен, удалить
 
         Hook myHook = new Hook();
 
@@ -53,12 +52,10 @@ namespace Builder.Interface
         // переписать, на то же самое что и в Controls_KeyDown
         private void Controls_KeyUp(object sender, KeyEventArgs e)
         {
-            //if (e.Key.Equals(Key.Back))
-            //{
-            //    bufferKeys.Clear();
-            //    ((TextBox)sender).Text = "Нет";
-            //}
-            //bufferKeys.Remove(e.Key);
+            if (e.Key.Equals(Key.Back))
+            {
+                ((TextBox)sender).Text = "Нет";
+            }
         }
 
         // Переписать весь метод, используя ModifierKeys
@@ -66,47 +63,32 @@ namespace Builder.Interface
         {
             e.Handled = true;
 
+
+           // ((TextBox)sender).Text = myHook.BufferKeyList(); //нах это надо?
+
             if (((TextBox)sender).IsKeyboardFocused)
             {
-                //e.KeyboardDevice.Modifiers
-                //if (e.KeyboardDevice.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
-
-                if (bufferKeys.Count > 0)
+                if (e.KeyboardDevice.Modifiers == ModifierKeys.None)
                 {
-                    if (bufferKeys.Last() != e.Key)
+                    //если это не сама клавиша shift | ctrl | Alt || System 
+                    if (e.Key != Key.LeftShift && e.Key != Key.LeftCtrl && e.Key != Key.LeftAlt && e.Key != Key.System && e.Key != Key.RightShift && e.Key != Key.RightCtrl && e.Key != Key.RightAlt)
+                        ((TextBox)sender).Text = e.Key.ToString();
+
+                }
+                else
+                {
+                    //если это не сама клавиша shift | ctrl | Alt || System c + Modifers
+                    if (e.Key != Key.LeftShift && e.Key != Key.LeftCtrl && e.Key != Key.LeftAlt && e.Key != Key.System && e.Key != Key.RightShift && e.Key != Key.RightCtrl && e.Key != Key.RightAlt)
+                        ((TextBox)sender).Text = e.KeyboardDevice.Modifiers.ToString().Replace(",", " + ") + " + " + e.Key.ToString();
+                    else
                     {
-                        //Нажата спецальная клавиша
-                        if ((bufferKeys.Last() < Key.A || bufferKeys.Last() > Key.Z) && (bufferKeys.Last() < Key.D1 || bufferKeys.Last() > Key.D9))
-                        {
-                            bufferKeys.Add(e.Key);
-                        }
-                        else
-                        //не специальная клавиша
-                        {
-                            bufferKeys.Remove(bufferKeys.Last());
-                            bufferKeys.Add(e.Key);
-                        }
+                        ((TextBox)sender).Text = "Нет";
                     }
-
                 }
-                else
-                {
-                    bufferKeys.Add(e.Key);
-                }
+
+                
+
             }
-
-            ((TextBox)sender).Text = String.Empty;
-
-            foreach (var item in bufferKeys)
-            {
-                if (bufferKeys.IndexOf(item) != bufferKeys.Count - 1)
-                    ((TextBox)sender).Text += item + " + ";
-
-                else
-                    ((TextBox)sender).Text += item;
-            }
-            //((TextBox)sender).Text = string.Empty;
-            //((TextBox)sender).Text += e.KeyboardDevice.Modifiers;
         }
 
         private void creatingNewCommands(object sender, RoutedEventArgs e)

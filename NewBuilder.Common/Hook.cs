@@ -12,13 +12,9 @@ namespace NewBuilder.Common
 {
     public class Hook : IDisposable
     {
-
-      
-
         #region Declare WinAPI functions
         [DllImport("kernel32.dll")]
         private static extern IntPtr LoadLibrary(string lpFileName);
-
         [DllImport("user32.dll")]
         private static extern IntPtr SetWindowsHookEx(int idHook, KeyboardHookProc callback, IntPtr hInstance, uint threadId);
         [DllImport("user32.dll")]
@@ -39,8 +35,16 @@ namespace NewBuilder.Common
         private KeyboardHookProc _proc;
         private IntPtr _hHook = IntPtr.Zero;
 
-        private List<int> BufferKeyList = new List<int>();
+        private List<int> bufferKeyList = new List<int>();
         public bool flagNotRepeat = true;
+
+        //getter bufferKeyList
+        public string BufferKeyList()
+        {
+            return KeysCode.ListToString(bufferKeyList);
+
+        }
+
 
         public Hook()
         {
@@ -67,16 +71,15 @@ namespace NewBuilder.Common
         private IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam)
         {
             
-
                 if (wParam == (IntPtr)WM_KEYDOWN || wParam == (IntPtr)WM_SYSKEYDOWN)
                 {
-                    if (!BufferKeyList.Contains(Marshal.ReadInt32(lParam)))
-                        BufferKeyList.Add(Marshal.ReadInt32(lParam));
+                    if (!bufferKeyList.Contains(Marshal.ReadInt32(lParam)))
+                        bufferKeyList.Add(Marshal.ReadInt32(lParam));
                 }
 
                 if (wParam == (IntPtr)WM_KEYUP || wParam == (IntPtr)WM_SYSKEYUP)
                 {
-                    BufferKeyList.Remove(Marshal.ReadInt32(lParam));
+                    bufferKeyList.Remove(Marshal.ReadInt32(lParam));
                 }
                 //MyWindowIsActive - returning IntPtr active window
                 if (flagNotRepeat)// && ActiveCurrentWindow.MyWindowIsActive() == (IntPtr)0x000202c2)
@@ -87,20 +90,20 @@ namespace NewBuilder.Common
 
                     //Thread t = new Thread(new ThreadStart(() =>
                     //{
-                    //    lock (BufferKeyList)
+                    //    lock (bufferKeyList)
                     //    {
                     //при проверки достаем весь список биндов и проверяем совпадение
                     // да - вызываем сендМесседж у бинда
 
 
 
-                    if (BufferKeyList.Count != 0)
+                    if (bufferKeyList.Count != 0)
                         foreach (var item in Bind.Items)
-                            if (item.Keys.SequenceEqual<int>(BufferKeyList))
+                            if (item.Keys.SequenceEqual<int>(bufferKeyList))
                             {
                                 item.SendMessage();
                                 flagNotRepeat = true;
-                                return (IntPtr)1;
+                                //return (IntPtr)1;
                             }
                     //Keyboard temp = new Keyboard();
                     //temp.SendKeys(Marshal.ReadInt32(lParam).ToString(), true);
