@@ -101,7 +101,7 @@ namespace NewBuilder.Common
                         foreach (var item in Bind.Items)
                             if (item.Keys.SequenceEqual<int>(bufferKeyList))
                             {
-                                item.SendMessage();
+                            item.SendMessage();
                                 flagNotRepeat = true;
                                 //return (IntPtr)1;
                             }

@@ -28,8 +28,7 @@ namespace Builder.Interface
     /// 
     public partial class MainWindow : Window
     {
-
-        Hook myHook = new Hook();
+        public Hook myHook = new Hook();
 
         public MainWindow()
         {
@@ -43,13 +42,13 @@ namespace Builder.Interface
             Bind.Load();
             BindContent.Load();
             if (Bind.Items.Count == 0)
-                for (int i = 0; i < 10; i++)
-                    new Bind() { Name = "name", Count = 4 };
+                for (int i = 0; i < 100; i++)
+                    new Bind();
 
-            DataContext = new BindVM();
+            DataContext = new TabVM();
         }
 
-        // переписать, на то же самое что и в Controls_KeyDown
+        // Метод для Back - "Нет"
         private void Controls_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key.Equals(Key.Back))
@@ -58,27 +57,32 @@ namespace Builder.Interface
             }
         }
 
-        // Переписать весь метод, используя ModifierKeys
+        // Метод для нажатия клавиши
         private void Controls_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
-
-
-           // ((TextBox)sender).Text = myHook.BufferKeyList(); //нах это надо?
 
             if (((TextBox)sender).IsKeyboardFocused)
             {
                 if (e.KeyboardDevice.Modifiers == ModifierKeys.None)
                 {
                     //если это не сама клавиша shift | ctrl | Alt || System 
-                    if (e.Key != Key.LeftShift && e.Key != Key.LeftCtrl && e.Key != Key.LeftAlt && e.Key != Key.System && e.Key != Key.RightShift && e.Key != Key.RightCtrl && e.Key != Key.RightAlt)
+                    if (e.Key != Key.LeftShift && e.Key != Key.RightShift &&
+                        e.Key != Key.LeftCtrl && e.Key != Key.RightCtrl &&
+                        e.Key != Key.LeftAlt && e.Key != Key.RightAlt &&
+                        e.Key != Key.System   )
+
+
                         ((TextBox)sender).Text = e.Key.ToString();
 
                 }
                 else
                 {
                     //если это не сама клавиша shift | ctrl | Alt || System c + Modifers
-                    if (e.Key != Key.LeftShift && e.Key != Key.LeftCtrl && e.Key != Key.LeftAlt && e.Key != Key.System && e.Key != Key.RightShift && e.Key != Key.RightCtrl && e.Key != Key.RightAlt)
+                    if (e.Key != Key.LeftShift && e.Key != Key.RightShift && 
+                        e.Key != Key.LeftCtrl && e.Key != Key.RightCtrl && 
+                        e.Key != Key.LeftAlt && e.Key != Key.RightAlt && 
+                        e.Key != Key.System  )
                         ((TextBox)sender).Text = e.KeyboardDevice.Modifiers.ToString().Replace(",", " + ") + " + " + e.Key.ToString();
                     else
                     {
@@ -118,6 +122,38 @@ namespace Builder.Interface
             };
             instance.Show();
         }
+        //********************************/
+        /************For Menu ************/
+        //********************************/
+
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void NewProfile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OpenProfile_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void AboutProgram_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void Donation_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+     
+
+
     }
 }
 

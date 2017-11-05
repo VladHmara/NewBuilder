@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
+
 namespace NewBuilder.Common
 {
     [Serializable]
@@ -18,12 +19,14 @@ namespace NewBuilder.Common
         public string Name { get; set; }
         public int Count { get; set; }
         public List<int> Keys { get; set; }
+        public string KeyStartChat { get; set; } //don't static cause serialization
 
         public Bind()
         {
             Name = "";
-            Count = 0;
+            Count = 1;
             Keys = new List<int>();
+            KeyStartChat = "";
         }
 
         public List<BindContent> GetBindContents()
@@ -53,20 +56,20 @@ namespace NewBuilder.Common
                             break;
                         if (bc.IsSend)
                         {
-
-
                             Keyboard kb = new Keyboard();
+                            string tempKey = "{" + KeyStartChat + "}";
+                            kb.SendKeys(tempKey, true);
                             kb.SendKeys(bc.Content + "{Enter}", true);
                             Thread.Sleep(bc.Delay);
                         }
                         else
                         {
-                            //object bufer = Clipboard.GetDataObject(); // сохраняем данные из буфера
+                            object bufer = Clipboard.GetDataObject(); // сохраняем данные из буфера
                             Clipboard.SetText(bc.Content);
                             SendKeys.SendWait("^v");
-                            //Clipboard.SetDataObject(bufer); // возвращаем первоначальные данные в буфер
+                            Clipboard.SetDataObject(bufer); // возвращаем первоначальные данные в буфер
                             // дописать {F6} + разобраться с сохранением в буфер и записью обратно
-                            Thread.Sleep(bc.Delay);
+                            //Thread.Sleep(bc.Delay);
                         }
                     }
         }
