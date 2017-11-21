@@ -10,11 +10,11 @@ namespace Builder.Interface
     public class BindVM
     {
         public List<BindTemp> Items { get; set; }
-        public BindVM()
+        public BindVM(int page)
         {
             Items = new List<BindTemp>();
-            foreach (Bind b in Bind.Items)
-                Items.Add(new BindTemp(b));
+            for(int i = 0; i < 10; i++)
+                Items.Add(new BindTemp(Bind.Items[page * 10 + i]));
         }
         public void SaveChange()
         {

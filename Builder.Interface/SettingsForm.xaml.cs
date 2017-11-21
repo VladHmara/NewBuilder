@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NewBuilder.Common;
+
 
 namespace Builder.Interface
 {
@@ -22,10 +24,41 @@ namespace Builder.Interface
         public SettingsForm()
         {
             InitializeComponent();
+
+            foreach (var item in Bind.Items)
+            {
+                KeyStartChat.Text = item.KeyStartChat;
+            }
+        }
+
+        private void Controls_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+
+            if (((TextBox)sender).IsKeyboardFocused)
+            {
+                if (e.KeyboardDevice.Modifiers == ModifierKeys.None)
+                {
+                    ((TextBox)sender).Text = e.Key.ToString();
+
+                }
+            }
+        }
+
+        private void Controls_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key.Equals(Key.Back))
+            {
+                ((TextBox)sender).Text = "Y";
+            }
         }
 
         private void BtnApply_Settings_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var item in Bind.Items)
+            {
+                item.KeyStartChat = KeyStartChat.Text;
+            }
 
         }
 

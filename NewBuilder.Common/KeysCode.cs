@@ -14,6 +14,8 @@ namespace NewBuilder.Common
         static KeysCode()
         {
             myKey1.Add("Нет", 0);
+            myKey1.Add("None", 0x1);
+            myKey1.Add("Нет1", 0x8);
             myKey1.Add("Tab", 0x9);
             myKey1.Add("Enter", 0x0D);
             myKey1.Add("CapsLock", 0x14);
@@ -109,10 +111,9 @@ namespace NewBuilder.Common
 
                 foreach (string key in keys.Split('+'))
                 {
-
-                    li.Add(myKey1[key.Trim()]);
-
-
+                    if (myKey2.ContainsValue(key))
+                        li.Add(myKey1[key.Trim()]);
+                 
                 }
 
             }
@@ -122,12 +123,20 @@ namespace NewBuilder.Common
         }
         public static string ListToString(List<int> keys)
         {
+       
             StringBuilder sb = new StringBuilder();
             foreach (int key in keys)
-                if (keys.IndexOf(key) != keys.Count - 1)
-                    sb.AppendFormat("{0} + ", myKey2[key]);
-                else
-                    sb.Append(myKey2[key]);
+            {
+                if (myKey2.ContainsKey(key))
+                {
+                    if (keys.IndexOf(key) != keys.Count - 1)
+                        sb.AppendFormat("{0} + ", myKey2[key]);
+                    else
+                        sb.Append(myKey2[key]);
+                }
+              
+            }
+             
             return sb.ToString();
         }
     }

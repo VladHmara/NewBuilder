@@ -28,9 +28,7 @@ namespace Builder.Interface
     /// 
     public partial class MainWindow : Window
     {
-        private List<Key> bufferKeys = new List<Key>(); // буфер не нужен, удалить
-
-        Hook myHook = new Hook();
+        public Hook myHook = new Hook();
 
         public MainWindow()
         {
@@ -44,69 +42,57 @@ namespace Builder.Interface
             Bind.Load();
             BindContent.Load();
             if (Bind.Items.Count == 0)
-                for (int i = 0; i < 10; i++)
-                    new Bind() { Name = "name", Count = 4 };
+                for (int i = 0; i < 100; i++)
+                    new Bind();
 
-            DataContext = new BindVM();
+            DataContext = new TabVM();
         }
 
-        // Думать что написать
+        // Метод для Back - "Нет"
         private void Controls_KeyUp(object sender, KeyEventArgs e)
         {
-            //if (e.Key.Equals(Key.Back))
-            //{
-            //    bufferKeys.Clear();
-            //    ((TextBox)sender).Text = "Нет";
-            //}
-            //bufferKeys.Remove(e.Key);
+            if (e.Key.Equals(Key.Back))
+            {
+                ((TextBox)sender).Text = "Нет";
+            }
         }
 
-        // Написать используя... используя... хук, вот.
+        // Метод для нажатия клавиши
         private void Controls_KeyDown(object sender, KeyEventArgs e)
         {
             e.Handled = true;
 
             if (((TextBox)sender).IsKeyboardFocused)
             {
-                //e.KeyboardDevice.Modifiers
-                //if (e.KeyboardDevice.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
-
-                if (bufferKeys.Count > 0)
+                if (e.KeyboardDevice.Modifiers == ModifierKeys.None)
                 {
-                    if (bufferKeys.Last() != e.Key)
+                    //если это не сама клавиша shift | ctrl | Alt || System 
+                    if (e.Key != Key.LeftShift && e.Key != Key.RightShift &&
+                        e.Key != Key.LeftCtrl && e.Key != Key.RightCtrl &&
+                        e.Key != Key.LeftAlt && e.Key != Key.RightAlt &&
+                        e.Key != Key.System   )
+
+
+                        ((TextBox)sender).Text = e.Key.ToString();
+
+                }
+                else
+                {
+                    //если это не сама клавиша shift | ctrl | Alt || System c + Modifers
+                    if (e.Key != Key.LeftShift && e.Key != Key.RightShift && 
+                        e.Key != Key.LeftCtrl && e.Key != Key.RightCtrl && 
+                        e.Key != Key.LeftAlt && e.Key != Key.RightAlt && 
+                        e.Key != Key.System  )
+                        ((TextBox)sender).Text = e.KeyboardDevice.Modifiers.ToString().Replace(",", " + ") + " + " + e.Key.ToString();
+                    else
                     {
-                        //Нажата спецальная клавиша
-                        if ((bufferKeys.Last() < Key.A || bufferKeys.Last() > Key.Z) && (bufferKeys.Last() < Key.D1 || bufferKeys.Last() > Key.D9))
-                        {
-                            bufferKeys.Add(e.Key);
-                        }
-                        else
-                        //не специальная клавиша
-                        {
-                            bufferKeys.Remove(bufferKeys.Last());
-                            bufferKeys.Add(e.Key);
-                        }
+                        ((TextBox)sender).Text = "Нет";
                     }
-
                 }
-                else
-                {
-                    bufferKeys.Add(e.Key);
-                }
+
+                
+
             }
-
-            ((TextBox)sender).Text = String.Empty;
-
-            foreach (var item in bufferKeys)
-            {
-                if (bufferKeys.IndexOf(item) != bufferKeys.Count - 1)
-                    ((TextBox)sender).Text += item + " + ";
-
-                else
-                    ((TextBox)sender).Text += item;
-            }
-            //((TextBox)sender).Text = string.Empty;
-            //((TextBox)sender).Text += e.KeyboardDevice.Modifiers;
         }
 
         private void creatingNewCommands(object sender, RoutedEventArgs e)
@@ -136,6 +122,38 @@ namespace Builder.Interface
             };
             instance.Show();
         }
+        //********************************/
+        /************For Menu ************/
+        //********************************/
+
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void NewProfile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OpenProfile_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void AboutProgram_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void Donation_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+     
+
+
     }
 }
 
