@@ -50,24 +50,27 @@ namespace NewBuilder.Common
 
             if (count > 0)
                 foreach (BindContent bc in BindContent.Items)
-                    if (bc.BindId.Equals(Id))
+                    if (bc.BindId.Equals(Id) && !bc.Content.Equals(string.Empty))
                     {
                         if (count-- <= 0)
                             break;
                         if (bc.IsSend)
                         {
                             Keyboard kb = new Keyboard();
-                            string tempKey = "{" + KeyStartChat + "}";
-                            kb.SendKeys(tempKey, true);
-                            kb.SendKeys(bc.Content + "{Enter}", true);
+                            //string tempKey = "{" + KeyStartChat + "}";
+                            //kb.SendKeys(tempKey, true);
+                            kb.SendKeys("{" + KeyStartChat + "}" + bc.Content + "{Enter}", true);// может забить на буфер и юзать так?
                             Thread.Sleep(bc.Delay);
                         }
                         else
                         {
-                            object bufer = Clipboard.GetDataObject(); // сохраняем данные из буфера
-                            Clipboard.SetText(bc.Content);
+                            string bufer = Clipboard.GetText(); // сохраняем данные из буфера
+                            
+                            Clipboard.SetText(bc.Content);//здесь лажа (буфер не успевает записать значение но сенд вэйт отправляет уже ctrl+v)
+                            
                             SendKeys.SendWait("^v");
-                            Clipboard.SetDataObject(bufer); // возвращаем первоначальные данные в буфер
+
+                            Clipboard.SetText(bufer); // возвращаем первоначальные данные в буфер & лажа при спаме(удержании кнопки, которая отсылает много нажатий), примерно то же что и в 69 строке
                             // дописать {F6} + разобраться с сохранением в буфер и записью обратно
                             //Thread.Sleep(bc.Delay);
                         }

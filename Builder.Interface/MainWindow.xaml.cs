@@ -48,50 +48,41 @@ namespace Builder.Interface
             DataContext = new TabVM();
         }
 
-        // Метод для Back - "Нет"
-        private void Controls_KeyUp(object sender, KeyEventArgs e)
+        private void TextBox_PreviewKeyUp(object sender, KeyEventArgs e)
         {
+            if (((TextBox)sender).Text.Length > 1 && ((TextBox)sender).Text[((TextBox)sender).Text.Length - 2] == '+')
+                ((TextBox)sender).Text = "Нет";
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
             if (e.Key.Equals(Key.Back))
             {
                 ((TextBox)sender).Text = "Нет";
             }
-        }
-
-        // Метод для нажатия клавиши
-        private void Controls_KeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = true;
-
-            if (((TextBox)sender).IsKeyboardFocused)
+            else
             {
-                if (e.KeyboardDevice.Modifiers == ModifierKeys.None)
+                switch (e.KeyboardDevice.Modifiers)
                 {
-                    //если это не сама клавиша shift | ctrl | Alt || System 
-                    if (e.Key != Key.LeftShift && e.Key != Key.RightShift &&
-                        e.Key != Key.LeftCtrl && e.Key != Key.RightCtrl &&
-                        e.Key != Key.LeftAlt && e.Key != Key.RightAlt &&
-                        e.Key != Key.System   )
-
-
+                    case 0:
                         ((TextBox)sender).Text = e.Key.ToString();
-
+                        break;
+                    case (ModifierKeys)5:
+                    case (ModifierKeys)1:
+                        if (e.SystemKey == Key.LeftAlt || e.SystemKey == Key.RightAlt)
+                            ((TextBox)sender).Text = e.KeyboardDevice.Modifiers.ToString().Replace(",", " +") + " + ";
+                        else
+                            ((TextBox)sender).Text = e.KeyboardDevice.Modifiers.ToString().Replace(",", " +") + " + " + e.SystemKey.ToString();
+                        break;
+                    default:
+                        if (e.Key == Key.LeftAlt || e.Key == Key.LeftCtrl || e.Key == Key.LeftShift || 
+                            e.Key == Key.RightAlt || e.Key == Key.RightCtrl || e.Key == Key.RightShift)
+                            ((TextBox)sender).Text = e.KeyboardDevice.Modifiers.ToString().Replace(",", " +") + " + ";
+                        else
+                            ((TextBox)sender).Text = e.KeyboardDevice.Modifiers.ToString().Replace(",", " +") + " + " + e.Key.ToString();
+                        break;
                 }
-                else
-                {
-                    //если это не сама клавиша shift | ctrl | Alt || System c + Modifers
-                    if (e.Key != Key.LeftShift && e.Key != Key.RightShift && 
-                        e.Key != Key.LeftCtrl && e.Key != Key.RightCtrl && 
-                        e.Key != Key.LeftAlt && e.Key != Key.RightAlt && 
-                        e.Key != Key.System  )
-                        ((TextBox)sender).Text = e.KeyboardDevice.Modifiers.ToString().Replace(",", " + ") + " + " + e.Key.ToString();
-                    else
-                    {
-                        ((TextBox)sender).Text = "Нет";
-                    }
-                }
-
-                
-
             }
         }
 
@@ -111,7 +102,7 @@ namespace Builder.Interface
 
         private void btnApply_Click(object sender, RoutedEventArgs e)
         {
-            ((BindVM)DataContext).SaveChange();
+            ((TabVM)DataContext).SaveChange();
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
@@ -139,19 +130,18 @@ namespace Builder.Interface
 
         private void OpenProfile_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void AboutProgram_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void Donation_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
-     
 
 
     }

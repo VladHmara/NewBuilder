@@ -10,8 +10,10 @@ namespace Builder.Interface
     public class BindVM
     {
         public List<BindTemp> Items { get; set; }
+        public int Page { get; set; }
         public BindVM(int page)
         {
+            Page = page;
             Items = new List<BindTemp>();
             for(int i = 0; i < 10; i++)
                 Items.Add(new BindTemp(Bind.Items[page * 10 + i]));

@@ -35,8 +35,13 @@
 
         </Menu>
 
-        <TabControl Grid.Row="1" BorderThickness="0" ItemsSource="{Binding Items}">
+        <TabControl Grid.Row="1" BorderThickness="0" ItemsSource="{Binding Items}" SelectedIndex="0">
             <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Page}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
                 <DataTemplate>
                     <Grid Margin="15" Name="GridMain">
                         <Grid.RowDefinitions>
@@ -66,7 +71,7 @@
                                                 <ColumnDefinition Width="100"/>
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBox Grid.Column="0" Text="{Binding Path=KeysTemp, Mode=TwoWay}" KeyDown="Controls_KeyDown" KeyUp="Controls_KeyUp" HorizontalAlignment="Stretch"  Cursor="" IsReadOnly="True" Margin="0,0,7,10" />
+                                            <TextBox Grid.Column="0" Text="{Binding Path=KeysTemp, Mode=TwoWay}" PreviewKeyDown="TextBox_PreviewKeyDown" PreviewKeyUp="TextBox_PreviewKeyUp" HorizontalAlignment="Stretch"  Cursor="" IsReadOnly="True" Margin="0,0,7,10" />
                                             <TextBox Grid.Column="1" x:Name="CountCommand" Text="{Binding Path=CountTemp, Mode=TwoWay}" Margin="0,0,7,10" />
                                             <Button Grid.Column="2" Content="Команды" Tag="{x:Reference CountCommand}" Click="creatingNewCommands" Margin="0,0,7,10"/>
                                             <TextBox Grid.Column="3" Text="{Binding Path=NameTemp, Mode=TwoWay}" Margin="0,0,0,10" Padding="1,0,0,0" />
@@ -79,7 +84,7 @@
                     </Grid>
 
                 </DataTemplate>
-            </TabControl.ItemTemplate>
+            </TabControl.ContentTemplate>
         </TabControl>
 
        

@@ -16,5 +16,10 @@ namespace Builder.Interface
             for(int i = 0; i < 10; i++)
                 Items.Add(new BindVM(i));
         }
+        public void SaveChange()
+        {
+            foreach (BindVM bv in Items)
+                bv.SaveChange();
+        }
     }
 }

@@ -101,9 +101,9 @@ namespace NewBuilder.Common
                         foreach (var item in Bind.Items)
                             if (item.Keys.SequenceEqual<int>(bufferKeyList))
                             {
-                            item.SendMessage();
+                                item.SendMessage();
                                 flagNotRepeat = true;
-                                //return (IntPtr)1;
+                                return (IntPtr)1;
                             }
                     //Keyboard temp = new Keyboard();
                     //temp.SendKeys(Marshal.ReadInt32(lParam).ToString(), true);

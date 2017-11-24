@@ -107,8 +107,6 @@ namespace NewBuilder.Common
             List<int> li = new List<int>();
             if (!keys.Equals(string.Empty))
             {
-
-
                 foreach (string key in keys.Split('+'))
                 {
                     if (myKey2.ContainsValue(key))
@@ -136,8 +134,10 @@ namespace NewBuilder.Common
                 }
               
             }
-             
-            return sb.ToString();
+            if (sb.Length == 0)
+                return "Нет";
+            else
+                return sb.ToString();
         }
     }
 }
